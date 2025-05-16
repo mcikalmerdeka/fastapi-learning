@@ -2,6 +2,10 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import pipeline
 
+"""
+This is a simple sentiment analysis app that uses the Hugging Face Transformers library to analyze the sentiment of a given text.
+"""
+
 # Load the sentiment-analysis model from Hugging Face
 model_name = "cardiffnlp/twitter-roberta-base-sentiment"
 sentiment_pipeline = pipeline("sentiment-analysis", model=model_name)

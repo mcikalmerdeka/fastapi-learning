@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+"""
+This is a simple FastAPI app that uses a linear regression model to predict a score based on two features.
+"""
+
 # Create a FastAPI app instance
 app = FastAPI()
 
