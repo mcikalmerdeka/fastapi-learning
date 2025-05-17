@@ -25,3 +25,8 @@ def predict(data: InputData):
     # Simulate prediction logic (e.g., ML model)
     score = data.feature1 * 0.6 + data.feature2 * 0.4
     return {"input": data.model_dump(), "prediction": score}
+
+# Run the app
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("simple_app:app", host="127.0.0.1", port=8000, reload=True)
