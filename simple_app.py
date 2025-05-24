@@ -24,6 +24,8 @@ def predict(data: InputData):
 
     # Simulate prediction logic (e.g., ML model)
     score = data.feature1 * 0.6 + data.feature2 * 0.4
+
+    # model_dump() is used to convert the input data to a dictionary
     return {"input": data.model_dump(), "prediction": score}
 
 # Run the app
