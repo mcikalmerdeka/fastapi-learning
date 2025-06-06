@@ -67,7 +67,8 @@ def delete_item(item_id: int):
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)
 
-# # Another way to run this is by using the terminal
+# # ================================ Testing using curl ================================
+
 # # POST - Create new item
 # curl -X POST "http://127.0.0.1:8000/items" -H "Content-Type: application/json" -d '{"id":1,"name":"Laptop","description":"Gaming laptop","price":1200.50}'
 
@@ -79,3 +80,20 @@ if __name__ == "__main__":
 
 # # DELETE - Delete item with ID 1
 # curl -X DELETE "http://127.0.0.1:8000/items/1"
+
+# # ================================ Testing using requests ================================
+
+# import requests
+
+# # POST
+# response = requests.post("http://127.0.0.1:8000/items", json={
+#     "id": 1,
+#     "name": "Laptop",
+#     "description": "Gaming laptop",
+#     "price": 1200.50
+# })
+# print(response.json())
+
+# # GET
+# response = requests.get("http://127.0.0.1:8000/items")
+# print(response.json())
