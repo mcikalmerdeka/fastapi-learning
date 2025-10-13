@@ -1,5 +1,6 @@
 # Python-generated files
 __pycache__/
+__init__.py
 *.py[oc]
 build/
 dist/
@@ -27,3 +28,4 @@ models/
 *.txt
 *.yaml
 *.yml
+.vscode/
