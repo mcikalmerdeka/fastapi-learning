@@ -9,14 +9,17 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt  # python-jose library for JWT
 from passlib.context import CryptContext  # For password hashing
 from sqlalchemy.orm import Session
-
+import os
+from dotenv import load_dotenv
 from . import models, schemas
 from .database import get_db
+
+load_dotenv()
 
 # ============ Configuration ============
 
 # Secret key for signing JWT tokens (in production, use environment variable!)
-SECRET_KEY = "your-secret-key-keep-this-secure-in-production"  # Change this!
+SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"  # HMAC with SHA-256
 ACCESS_TOKEN_EXPIRE_MINUTES = 30  # Token valid for 30 minutes
 
