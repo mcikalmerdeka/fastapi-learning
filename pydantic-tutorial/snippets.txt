@@ -1,0 +1,136 @@
+### New BlogPost
+post = BlogPost(
+    title="Getting Started with Python",
+    content="Here's how to begin...",
+    author_id="12345",
+)
+
+
+### Invalid User
+try:
+    user = User(
+        uid=0,
+        username="cs",
+        email="CoreyMSchafer@gmail.com",
+        age=12,
+    )
+except ValidationError as e:
+    print(e)
+
+
+### Valid User
+user = User(
+    username="coreyms",
+    email="CoreyMSchafer@gmail.com",
+    age=39,
+    password="secret123",
+)
+print(user)
+
+
+### Username Validation
+@field_validator('username')
+@classmethod
+def validate_username(cls, v: str) -> str:
+    if not v.replace('_', '').isalnum():
+        raise ValueError('Username must be alphanumeric (underscores allowed)')
+    return v.lower()
+
+
+### URL Validation (no mode)
+@field_validator('website')
+@classmethod
+def add_https(cls, v: str | None) -> str | None:
+    if v and not v.startswith(('http://', 'https://')):
+        return f'https://{v}'
+    return v
+
+
+### Model Validator
+class UserRegistration(BaseModel):
+    email: EmailStr
+    password: str
+    confirm_password: str
+    
+    @model_validator(mode='after')
+    def passwords_match(self) -> 'UserRegistration':
+        if self.password != self.confirm_password:
+            raise ValueError('Passwords do not match')
+        return self
+
+try:
+    registration = UserRegistration(
+        email="CoreyMSchafer@gmail.com",
+        password="secret123",
+        confirm_password="secret456"
+    )
+except ValidationError as e:
+    print(e)
+
+
+### Computed Fields
+first_name: str = ""
+last_name: str = ""
+follower_count: int = 0
+
+@computed_field
+@property
+def display_name(self) -> str:
+    if self.first_name and self.last_name:
+        return f"{self.first_name} {self.last_name}"
+    return self.username
+
+@computed_field
+@property
+def is_influencer(self) -> bool:
+    return self.follower_count >= 10000
+
+
+### Comment Model
+class Comment(BaseModel):
+    content: str
+    author_email: EmailStr
+    likes: int = 0
+
+
+### BlogPost Dictionary
+post_data = {
+    "title": "Understanding Pydantic Models",
+    "content": "Pydantic makes data validation easy and intuitive...",
+    "slug": "understanding-pydantic",
+    "author": {
+        "username": "coreyms",
+        "email": "CoreyMSchafer@gmail.com",
+        "age": 39,
+        "password": "secret123",
+    },
+    "comments": [
+        {
+            "content": "I think I understand nested models now!",
+            "author_email": "student@example.com",
+            "likes": 25,
+        },
+        {
+            "content": "Can you cover FastAPI next?",
+            "author_email": "viewer@example.com",
+            "likes": 15,
+        },
+    ],
+}
+
+post = BlogPost(**post_data)
+
+print(post.model_dump_json(indent=2))
+
+
+### User Dictionary
+user_data = {
+    "id": "3bc4bf25-1b73-44da-9078-f2bb310c7374",
+    "username": "Corey_Schafer",
+    "email": "CoreyMSchafer@gmail.com",
+    "age": "39",
+    "password": "secret123",
+}
+user = User.model_validate(user_data)
+
+print(user.model_dump_json(indent=2))
