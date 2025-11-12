@@ -11,21 +11,21 @@ wheels/
 .venv
 
 # uv files
-.python-version
+# .python-version
 
 # Model and data files
-data/
+# data/
 models/
 
 # Environment variables
 .env
 
 # ipynb files
-*.ipynb
+# *.ipynb
 
 # Additional files
-*.log
+# *.log
 *.txt
-*.yaml
+# *.yaml
 *.yml
 .vscode/
