@@ -3,6 +3,11 @@ import uvicorn
 from fastapi import FastAPI
 import users
 
+import models
+from database import engine
+
+models.Base.metadata.create_all(bind=engine)
+
 app = FastAPI(title="My API")
 
 # Include the router
