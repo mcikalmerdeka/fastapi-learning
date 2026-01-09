@@ -29,3 +29,6 @@ models/
 # *.yaml
 *.yml
 .vscode/
+
+# Database files
+*.db
